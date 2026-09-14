@@ -1,41 +1,64 @@
 package interfaz;
 
+import logica.Funciones;
 import javax.swing.*;
 
 public class SistemaMatricula {
     public static void main(String[] args) {
-        JOptionPane.showMessageDialog(null,
-                "1) Registrar estudiante\n" +
-                "2) Registrar curso\n" +
-                "3) Matricular\n" +
-                "4) Consultas\n" +
-                "5) Salir");
+        // Creamos el objeto de la capa lógica
+        Funciones logica = new Funciones();
+
         int opcion = 0;
-        while(opcion!=5){
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("Que desea realizar"));
+        while(opcion != 5){
+            String input = JOptionPane.showInputDialog(null,
+                    "=== SISTEMA DE MATRÍCULA ===\n" +
+                            "1) Registrar estudiante\n" +
+                            "2) Registrar curso\n" +
+                            "3) Matricular\n" +
+                            "4) Consultas\n" +
+                            "5) Salir\n\n" +
+                            "¿Qué desea realizar?");
+
+            if (input == null) {
+                opcion = 5;
+                continue;
+            }
+
+            try {
+                opcion = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                opcion = 0;
+            }
 
             switch(opcion){
-
-
                 case 1:
-                    JOptionPane.showMessageDialog(null, "Registrar estudiante");
+                    logica.gestionarRegistroEstudiantes();
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Registrar curso");
+                    logica.gestionarRegistroCursos();
                     break;
                 case 3:
-                    JOptionPane.showMessageDialog(null, "Matricular");
+                    logica.gestionarMatricula();
                     break;
                 case 4:
-                    JOptionPane.showMessageDialog(null, "Consultas");
+                    String tipoConsultaStr = JOptionPane.showInputDialog(
+                            "¿Qué desea consultar?\n" +
+                                    "1) Estudiantes\n" +
+                                    "2) Cursos\n" +
+                                    "3) Matrículas");
+                    if (tipoConsultaStr != null) {
+                        int tipoConsulta = Integer.parseInt(tipoConsultaStr);
+                        logica.gestionarConsultas(tipoConsulta);
+                    }
                     break;
                 case 5:
-                    JOptionPane.showMessageDialog(null, "Saliendo...");
+                    JOptionPane.showMessageDialog(null, "Saliendo del sistema...");
                     System.exit(0);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción no válida.");
                     break;
             }
         }
-        System.out.println("Funciona");
-
     }
 }
