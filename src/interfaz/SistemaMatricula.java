@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class SistemaMatricula {
     public static void main(String[] args) {
-        // Creamos el objeto de la capa lógica
+
         Funciones logica = new Funciones();
 
         int opcion = 0;
